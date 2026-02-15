@@ -42,6 +42,7 @@ const App: React.FC = () => {
   
   // Playback Control State
   const [isShuffle, setIsShuffle] = useState(false);
+  const [isLooping, setIsLooping] = useState(false);
   const [queue, setQueue] = useState<Song[]>([]);
 
   // Search State
@@ -413,7 +414,15 @@ const App: React.FC = () => {
     if (audioRef.current) setDuration(audioRef.current.duration);
   };
 
-  const handleSongEnd = () => handleNext();
+  const handleSongEnd = () => {
+    // Loop Logic
+    if (isLooping && audioRef.current) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
+        return;
+    }
+    handleNext();
+  };
 
   const handleAudioError = (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {
       console.error("Audio playback error:", e);
@@ -559,6 +568,7 @@ const App: React.FC = () => {
 
   const handleAddToQueue = (song: Song) => {
     setQueue(prev => [...prev, song]);
+    // Optional: Add a simple toast notification here if you had a toast component
   };
 
   const handleToggleLike = async (songId?: string) => {
@@ -826,7 +836,7 @@ const App: React.FC = () => {
             onToggleTheme={toggleTheme}
           />
           
-          <div className="px-8 pb-32 flex-1">
+          <div className="px-4 md:px-8 pb-32 flex-1">
              <Dashboard 
                view={currentView}
                playlists={playlists}
@@ -861,6 +871,7 @@ const App: React.FC = () => {
         currentSong={currentSong}
         isPlaying={isPlaying}
         isShuffle={isShuffle}
+        isLooping={isLooping}
         isLiked={currentSong ? likedSongIds.has(currentSong.id) : false}
         isFullScreen={currentView === ViewState.NOW_PLAYING}
         currentTime={currentTime}
@@ -869,6 +880,7 @@ const App: React.FC = () => {
         onNext={handleNext}
         onPrev={handlePrev}
         onToggleShuffle={() => setIsShuffle(!isShuffle)}
+        onToggleLoop={() => setIsLooping(!isLooping)}
         onToggleLike={() => handleToggleLike()}
         onAddToPlaylist={() => currentSong && openAddToPlaylistModal(currentSong.id)}
         onAddToQueue={() => currentSong && handleAddToQueue(currentSong)}

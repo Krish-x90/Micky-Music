@@ -35,6 +35,24 @@ export const Slider: React.FC<SliderProps> = ({ value, onChange, className = '',
     window.removeEventListener('mouseup', handleMouseUp);
   };
 
+  // Touch Events
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+    updateValue(e.touches[0].clientX);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', handleTouchEnd);
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    updateValue(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    window.removeEventListener('touchmove', handleTouchMove);
+    window.removeEventListener('touchend', handleTouchEnd);
+  };
+
   const updateValue = (clientX: number) => {
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
@@ -50,6 +68,7 @@ export const Slider: React.FC<SliderProps> = ({ value, onChange, className = '',
       ref={containerRef}
       className={`relative h-1.5 w-full bg-white/10 rounded-full cursor-pointer group touch-none ${className}`}
       onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
     >
       {/* Filled Bar */}
       <div 
