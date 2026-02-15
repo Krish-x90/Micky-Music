@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Micky Music</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              background: 'var(--bg-main)',
+              card: 'var(--bg-card)',
+              primary: '#a855f7', // Rich Purple
+              'primary-dark': '#7e22ce',
+              accent: '#8A2BE2', // Neon Purple
+            },
+            textColor: {
+              DEFAULT: 'var(--text-main)',
+              muted: 'var(--text-muted)',
+            },
+            boxShadow: {
+              'neon': '0 0 10px rgba(168, 85, 247, 0.5), 0 0 20px rgba(168, 85, 247, 0.3)',
+              'neon-hover': '0 0 15px rgba(168, 85, 247, 0.7), 0 0 30px rgba(168, 85, 247, 0.4)',
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.5s ease-out',
+              'slide-up': 'slideUp 0.5s ease-out',
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      :root {
+        --bg-main: #0f0f10;
+        --bg-card: #1a1a1c;
+        --text-main: #ffffff;
+        --text-muted: #9ca3af;
+        --glass-bg: rgba(26, 26, 28, 0.6);
+        --glass-border: rgba(255, 255, 255, 0.08);
+      }
+
+      .light {
+        --bg-main: #f3f4f6;
+        --bg-card: #ffffff;
+        --text-main: #111827;
+        --text-muted: #4b5563;
+        --glass-bg: rgba(255, 255, 255, 0.7);
+        --glass-border: rgba(0, 0, 0, 0.05);
+      }
+
+      body {
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        user-select: none;
+        -webkit-user-select: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      /* Allow selection in inputs */
+      input, textarea, [contenteditable] {
+        user-select: text;
+        -webkit-user-select: text;
+      }
+
+      /* Custom scrollbar for Webkit */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-main);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #a855f7;
+      }
+      .light ::-webkit-scrollbar-thumb {
+        background: #d1d5db;
+      }
+      .light ::-webkit-scrollbar-thumb:hover {
+        background: #a855f7;
+      }
+
+      .glass {
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+      }
+      .glass-panel {
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+      }
+      .glass-card {
+        background: var(--bg-card);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "lucide-react": "https://esm.sh/lucide-react@^0.564.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+    "firebase/auth": "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js",
+    "firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js",
+    "firebase/storage": "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js",
+    "firebase/": "https://esm.sh/firebase@^12.9.0/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
