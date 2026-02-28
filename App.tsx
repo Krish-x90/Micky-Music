@@ -571,6 +571,43 @@ const App: React.FC = () => {
     // Optional: Add a simple toast notification here if you had a toast component
   };
 
+  // --- Keyboard Shortcuts ---
+  const handleNextRef = useRef(handleNext);
+  const handlePrevRef = useRef(handlePrev);
+  const currentSongRef = useRef(currentSong);
+
+  useEffect(() => {
+    handleNextRef.current = handleNext;
+    handlePrevRef.current = handlePrev;
+    currentSongRef.current = currentSong;
+  });
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        document.activeElement instanceof HTMLInputElement ||
+        document.activeElement instanceof HTMLTextAreaElement ||
+        (document.activeElement as HTMLElement).isContentEditable
+      ) {
+        return;
+      }
+
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (currentSongRef.current) {
+            setIsPlaying(prev => !prev);
+        }
+      } else if (e.code === 'ArrowRight') {
+        handleNextRef.current();
+      } else if (e.code === 'ArrowLeft') {
+        handlePrevRef.current();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   const handleToggleLike = async (songId?: string) => {
     // Auth Gate
     if (!isLoggedIn) {
